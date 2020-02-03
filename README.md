@@ -21,8 +21,10 @@
 TODO: git init 
 
 ## Creación del proyecto java con maven:
-
-TODO: creación usando comandos maven, 
+~~~
+mvn archetype:generate -DgroupId=org.medellin.java -DartifactId=decodificando-java-con-maven-junit-github
+ -Dversion=1.0-SNAPSHOT -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=RELEASE -Dfile.encoding=UTF-8 -DinteractiveMode=false
+~~~
 
 ## Creación de 
 
