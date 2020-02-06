@@ -27,13 +27,16 @@ mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -Dgroup
 
 TODO: resources directory wasn't created
 TODO: to create maven with jupiter instead of junit
-## Creación de 
+## Creación de pro
 
-TODO: codigo para operaciones basicas, con Input  (Console).  Usar algun feature de +Java10 como var para mostrar como cambiar el JDK en el pom
+Esta proyecto contiene 2 apps: Una primera una calculadora para hacer operaciones matemáticas básicas: sumar, restar, multiplicar y dividir,
+ y otra para realizar las 4 operaciones básicas sobre una base de datos: Crear, Actualizar, Consultar y Eliminar.
+ 
+ 
+ TODO: Calculator only has sum, to add the other operations. Add delete (remove) and update (merge) to database part
 
 
-
-## Adición de pruebas unitarias con JUnit:
+## Adición de pruebas unitarias con JUnit/Jupiter:
 
 TODO: Adición de las dependencias de JUnit, Casos de pruebas true , false, con datos quemados y leyendo desde archivo 
 
