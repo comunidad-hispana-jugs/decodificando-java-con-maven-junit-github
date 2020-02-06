@@ -1,0 +1,36 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="soccercupJPA">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbc.JDBCDriver"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:demo;DB_CLOSE_DELAY=-1"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+
+            <!-- For Postgres Database
+        <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/postgres"/>
+        <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+        <property name="hibernate.connection.username" value="postgres"/>
+        <property name="hibernate.connection.password" value=""/>
+
+        <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
+        <property name="hibernate.show_sql" value="true"/>-->
+
+
+        </properties>
+
+
+    </persistence-unit>
+</persistence>
