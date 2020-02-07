@@ -18,6 +18,8 @@ public class SoccerCupClient {
 
 		TeamService teamService = new TeamService();
 
+		logger.info( "Create teams" );
+
 		var team = new Team();
 		team.setName( "My Team 1" );
 		team = teamService.persistTeam( team );
@@ -30,6 +32,25 @@ public class SoccerCupClient {
 
 		System.out.println( teamList );
 
+		logger.info( "Delete team 1" );
+
+		Team teamDeleted = teamService.deleteTeam(1L);
+
+		teamList = teamService.getAllTeams();
+
+		System.out.println( teamList );
+
+		logger.info( "Update team 0 name" );
+
+		Team team1 = teamService.getById(0L);
+
+		team1.setName("My team name changed");
+
+		teamService.updateTeam(team1);
+
+		teamList = teamService.getAllTeams();
+
+		System.out.println( teamList );
 
 		logger.info( "Closing Soccer Cup Console client" );
 	}
