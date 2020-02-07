@@ -150,8 +150,16 @@ Verificar que los cambias provenientes de la rama creada funcionen con las carac
 
 ##Creación de Pull Request (PR)
 1. Ir a la ruta del repositorio remoto
-2. Seleccionar el commit que muestra los cambios realizados en la rama que se estaba trabajando
-3. Seleccionar la rama a la cual se solicita hacer merge mediante el Pull Request
-4. Seleccionar los aprobadores
-5. Clic en el botón crear Pull Request
-6. En caso de no requerir aprobadores dar clic directamente en el botón "Merge"
+2. Verificar que se muestra un nuevo mensaje con el nombre de la rama que se acabó de subir al lado izquierdo  
+![Nuevo Push](src/main/resources/screenshots/ScreenShot1.png?raw=true "Nuevo Push")
+3. Clic en el botón verde del mensaje anterior que dice "Compare & pull request"
+4. Seleccionar la rama base a la cual se desea fusionar la rama recien subida  
+![Crear PR](src/main/resources/screenshots/ScreenShot2.png?raw=true "Crear PR")
+5. Indicar el título de la solicitud del PR y una descripción asociada a los cambios realizados
+6. Seleccionar las personas que revisaran y aprobaran los cambios  
+![Solicitar aprobación PR](src/main/resources/screenshots/ScreenShot3.png?raw=true "Solicitar aprobación PR")
+7. Verificar la comparación de diferencias en la parte inferior  
+![Verificar diferencias PR](src/main/resources/screenshots/ScreenShot4.png?raw=true "Verificar diferencias PR")
+8. Clic en el botón "Crear pull request"
+9. Finalmente cuando los revisores(En caso de ser necesario) hayan aprobado los cambios se dará clic en el botón "Merge pull request"  
+![Merge PR](src/main/resources/screenshots/ScreenShot5.png?raw=true "Merge PR")
