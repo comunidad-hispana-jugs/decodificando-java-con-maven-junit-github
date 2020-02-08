@@ -37,4 +37,44 @@ public class TeamService {
 
 		return teamList;
 	}
+
+	public Team getById(Long id) {
+
+		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//entityManager.getTransaction().begin();
+		Team team = entityManager.find(Team.class, id);
+//entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return team;
+	}
+
+	public Team deleteTeam(Long id) {
+
+		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		Team team = entityManager.find(Team.class, id);
+		entityManager.remove(team);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		return team;
+
+	}
+
+	public Team updateTeam(Team team) {
+
+		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.merge( team );
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		return team;
+
+	}
 }

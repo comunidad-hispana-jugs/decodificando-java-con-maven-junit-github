@@ -22,13 +22,36 @@ public class CalculatorClient {
 		String textNumber2 = bufferedReader.readLine();
 		validateNumber( textNumber2 );
 
+		System.out.println( "Operation: " );
+		String operation = bufferedReader.readLine();
 
 		Long number1 =Long.valueOf( textNumber1 );
 		Long number2 = Long.valueOf( textNumber2 );
 
 		BasicCalculator calculator = new BasicCalculator();
 
-		System.out.println( number1 + " + " + number2 + " = " + calculator.sum( number1, number2 ) );
+		Long result = null;
+		switch (operation){
+			case "sum":{
+				result = calculator.sum( number1, number2 );
+				break;
+			}
+			case "mul":{
+				result = calculator.mul( number1, number2 );
+				break;
+			}
+			case "subs":{
+				result = calculator.subs( number1, number2 );
+				break;
+			}
+			case "div":{
+				result = calculator.div( number1, number2 );
+				break;
+			}
+			default: throw new IllegalArgumentException("operation " + operation + " doesn't exist");
+		}
+
+		System.out.println( number1 + " " + operation + " " + number2 + " = " +  result);
 
 		logger.info( "Closing calculator console client" );
 
