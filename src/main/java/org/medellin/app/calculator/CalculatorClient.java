@@ -22,7 +22,7 @@ public class CalculatorClient {
 		String textNumber2 = bufferedReader.readLine();
 		validateNumber( textNumber2 );
 
-		System.out.println( "Operation: " );
+		System.out.println( "Operation (+, -, *, /): " );
 		String operation = bufferedReader.readLine();
 
 		Long number1 =Long.valueOf( textNumber1 );
@@ -32,19 +32,19 @@ public class CalculatorClient {
 
 		Long result = null;
 		switch (operation){
-			case "sum":{
+			case "+":{
 				result = calculator.sum( number1, number2 );
 				break;
 			}
-			case "mul":{
+			case "*":{
 				result = calculator.mul( number1, number2 );
 				break;
 			}
-			case "subs":{
+			case "-":{
 				result = calculator.subs( number1, number2 );
 				break;
 			}
-			case "div":{
+			case "/3":{
 				result = calculator.div( number1, number2 );
 				break;
 			}

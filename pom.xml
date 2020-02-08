@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.12</maven.compiler.source>
+        <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <!--Database client -->
         <hibernate.version>5.4.10.Final</hibernate.version>
@@ -20,8 +20,12 @@
         <!--Testing-->
         <!--<version.junit>4.12</version.junit>-->
         <junit.jupiter.version>5.5.1</junit.jupiter.version>
+        <surefire.version>2.22.2</surefire.version>
         <!--Logging-->
         <slf4j.version>1.7.30</slf4j.version>
+
+
+
     </properties>
 
     <dependencies>
@@ -79,7 +83,18 @@
         </dependency>
 
 
+
     </dependencies>
+
+
+    <build>
+        <plugins>
+             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
