@@ -5,54 +5,51 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.medellin.app.calculator.CalculatorClient;
 import org.medellin.app.soccercup.entity.Team;
 import org.medellin.app.soccercup.service.TeamService;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 public class SoccerCupClient {
 
-	final static  Logger logger = LoggerFactory.getLogger( CalculatorClient.class );
+	private static final  Logger logger = LoggerFactory.getLogger( SoccerCupClient.class );
+	private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "soccercupJPA" );
 
 	public static void main(String[] args) {
 		logger.info( "Starting Soccer Cup Console client" );
 
-		TeamService teamService = new TeamService();
+		TeamService teamService = new TeamService(entityManagerFactory.createEntityManager());
 
 		logger.info( "Create teams" );
 
-		var team = new Team();
-		team.setName( "My Team 1" );
-		team = teamService.persistTeam( team );
-
-		var team2 = new Team();
-		team2.setName( "My Team 2" );
-		team2 = teamService.persistTeam( team2 );
+		teamService.persistTeam( new Team("My Team 1") );
+		teamService.persistTeam( new Team("My Team 2" ) );
 
 		List<Team> teamList = teamService.getAllTeams();
 
 		System.out.println( teamList );
 
-		logger.info( "Delete team 1" );
-
-		Team teamDeleted = teamService.deleteTeam(1L);
-
-		teamList = teamService.getAllTeams();
-
-		System.out.println( teamList );
-
 		logger.info( "Update team 0 name" );
 
-		Team team1 = teamService.getById(0L);
+		var teamCreated = teamService.getById(0L);
 
-		team1.setName("My team name changed");
+		var teamUpdated = new Team(teamCreated.getId(), "My team name changed");
 
-		teamService.updateTeam(team1);
+		teamService.updateTeam(teamUpdated);
 
 		teamList = teamService.getAllTeams();
 
 		System.out.println( teamList );
 
+		logger.info( "Delete all teams" );
+
+		teamList.forEach((aTeam) ->
+				teamService.deleteTeam(aTeam.getId())
+		);
+
 		logger.info( "Closing Soccer Cup Console client" );
+		teamService.close();
 	}
 
 
