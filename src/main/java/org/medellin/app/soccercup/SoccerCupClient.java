@@ -11,7 +11,7 @@ import org.medellin.app.soccercup.service.TeamService;
 
 public class SoccerCupClient {
 
-	final static Logger logger = LoggerFactory.getLogger( CalculatorClient.class );
+	final static  Logger logger = LoggerFactory.getLogger( CalculatorClient.class );
 
 	public static void main(String[] args) {
 		logger.info( "Starting Soccer Cup Console client" );

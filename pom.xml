@@ -15,7 +15,6 @@
         <!--Database client -->
         <hibernate.version>5.4.10.Final</hibernate.version>
         <hsqldb.version>2.5.0</hsqldb.version>
-        <!--<postgresql.version>42.2.8</postgresql.version>-->
 
         <!--Testing-->
         <!--<version.junit>4.12</version.junit>-->
@@ -23,8 +22,6 @@
         <surefire.version>2.22.2</surefire.version>
         <!--Logging-->
         <slf4j.version>1.7.30</slf4j.version>
-
-
 
     </properties>
 
@@ -43,14 +40,6 @@
             <version>${hsqldb.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-        <!--<dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>${postgresql.version}</version>
-      </dependency>-->
-
-
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -66,15 +55,6 @@
 
         </dependency>
 
-
-        <!--
-      <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
-      </dependency>
-      -->
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -82,10 +62,7 @@
             <scope>test</scope>
         </dependency>
 
-
-
     </dependencies>
-
 
     <build>
         <plugins>
@@ -95,6 +72,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
