@@ -14,7 +14,6 @@
 - Cuenta en un servicio de repositorios remotos basados en Git
   - GitHub: https://github.com/join
   - GitLab: https://gitlab.com/users/sign_up
-- Docker: https://www.docker.com/get-started
 
 
 ## Creación del proyecto Java con Maven
