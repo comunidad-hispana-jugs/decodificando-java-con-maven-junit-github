@@ -2,7 +2,7 @@
 
 ## Requisitos:
 
-- JDK 8 o superior: https://jdk.java.net/13/
+- JDK 9 o superior: https://jdk.java.net/13/
 - Maven 
   - Descarga: (https://maven.apache.org/download.cgi)
   - Instalación: (https://maven.apache.org/install.html)
@@ -54,16 +54,18 @@ Log de creación del nuevo proyecto Maven:
 [INFO] Finished at: 2020-02-06T22:11:28-05:00
 [INFO] ------------------------------------------------------------------------
 ~~~
-TODO: resources directory wasn't created
-TODO: to create maven with jupiter instead of junit
+
+Ir a la carpeta del proyecto base:
+~~~
+cd my-demo
+~~~
+
+*Puede eliminar las clases que se generó en `src/main/java/org/medellin/app` y `src/test/java/org/medellin/app`*
 
 
 ## Creación del repositorio con Git (local)
 Ingresar al directorio que contiene el proyecto recien creado:
-~~~
-cd my-demo
-~~~
-Crear el repositorio local de Git dentro del proyecto:
+
 ~~~
 git init
 ~~~
@@ -86,11 +88,53 @@ git branch -l
 
 ## Creación de proyectos
 
-Esta proyecto contiene 2 apps: Una primera una calculadora para hacer operaciones matemáticas básicas: sumar, restar, multiplicar y dividir,
+Esta proyecto contiene 2 funcionalidades: La primera una calculadora para hacer operaciones matemáticas básicas: sumar, restar, multiplicar y dividir,
  y otra para realizar las 4 operaciones básicas sobre una base de datos: Crear, Actualizar, Consultar y Eliminar.
  
- 
  TODO: Calculator only has sum, to add the other operations. Add delete (remove) and update (merge) to database part
+
+####Agregar las Dependencias para las Pruebas Unitarias ####
+
+##### 1. Agregar las propiedades para parametrizar las versiones y las especificaciones para la compilación del artefacto #####
+~~~
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>12</maven.compiler.source>
+    <maven.compiler.target>12</maven.compiler.target>
+
+    <!--Testing-->
+    <!--<version.junit>4.12</version.junit>-->
+    <junit.jupiter.version>5.5.1</junit.jupiter.version>
+    <surefire.version>2.22.2</surefire.version>
+
+</properties>
+~~~
+*Tener en cuenta que se estaría usando Java 12 como mínima versión de compilación.*
+
+##### 2. Actualizar la dependencia de junit a jupiter #####
+~~~
+        
+<dependency>
+    <groupId>org.junit.jupiter</groupId>            <artifactId>junit-jupiter</artifactId>
+    <version>${junit.jupiter.version}</version>
+    <scope>test</scope>
+</dependency>
+  
+~~~
+Los paquetes que debe importar para los tests están dentro de `org.junit.jupiter`.
+
+##### 3. Y por ultimo agrega el plugin surefire al build #####
+~~~
+ <build>
+      <plugins>
+             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+            </plugin>
+        </plugins>
+  </build>
+~~~
+ 
 
 
 ## Adición de pruebas unitarias con JUnit/Jupiter:
@@ -100,9 +144,15 @@ TODO: Adición de las dependencias de JUnit, Casos de pruebas true , false, con 
 
 ## Creación de ejecutable
 
-
-TODO: Jar y como ejecutarlo, como saltar los test con skipTests=true
-
+El siguiente comando empaqueta el binario en la carpeta `target/.*jar`. El comando compila y construye:
+~~~
+mvn package
+~~~
+Para empaqueta sin necesidad compilar los tests se usa el siguiente comando:
+~~~
+mvn package -Dmaven.test.skip=true
+~~~
+***Esa propiedad hace parte del plugin surefire***
 
 ## Actualización del repositorio local
 Verificar los cambios realizados en los archivos del proyecto
