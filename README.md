@@ -141,11 +141,11 @@ Crea los casos de pruebas en la clase BasicCalculator.java ubicada en  `src/main
 
 - Instanciamos el sujeto de prueba en la clase CalculatorTest.java, en este caso el sujeto es BasicCalculator:
 
-    public class CalculatorTest {
+        public class CalculatorTest {
     
-        private final BasicCalculator basicCalculator = new BasicCalculator();
+            private final BasicCalculator basicCalculator = new BasicCalculator();
         
-        ...
+            ...
 
 - Empezamos con el primer caso de prueba, un caso de exito. Creamos un metodo sum. Este metodo va a usar el sujeto de prueba para sumar 1 con 1.
 
