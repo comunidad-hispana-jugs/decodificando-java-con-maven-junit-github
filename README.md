@@ -113,7 +113,7 @@ private static final Logger logger = LoggerFactory.getLogger(BasicCalculator.cla
 
 ## Creación de casos de pruebas
 
-Crea los casos de pruebas en la clase AppTest.java ubicada en  `src/test/java/org/medellin/app` como se explica a continuación
+Crea los casos de pruebas en la clase BasicCalculator.java ubicada en  `src/main/java/org/medellin/app/calculator` como se explica a continuación
 
 - Abre el archivo pom.xml
 
@@ -137,9 +137,41 @@ Crea los casos de pruebas en la clase AppTest.java ubicada en  `src/test/java/or
         </dependency>
         
 
-- Abre la clase AppTest.java para crear los casos de pruebas
+- Abre la clase BasicCalculator.java para crear los casos de pruebas. Cree auna clase CalculatorTest.java en `src/test/java/org/medellin/app/calculator`
 
-TODO : pasos para la creacion del caso de prueba
+- Por cada operacion en BasicCalculator.java, se debe crear al menos un caso de prueba. Por ejemplo, el siguiente es un caso de prueba para la operacion sumar:
+
+ 
+    @Test
+    @DisplayName("Testing sum: 1+1=2")
+    void sum() {
+        assertEquals(2, basicCalculator.sum(1L, 1L));
+    }
+    
+En este caso, @Test le dice a JUnit que este es un caso de prueba. @DisplayName define la descripcion del caso de prueba. En este caso solo estamos ejecutando la prueba con un unico caso de entrada, 1 + 1.
+
+JUnit 5 permite crear casos de prueba parametrizados, en los cuales se puede asociar multiples entradas al caso de prueba, por ejemplo:
+
+ 
+    @DisplayName("Testing several sums")
+    @ParameterizedTest(name = "{0} + {1} = {2}")
+    @CsvSource({
+            "0,    1,   1",
+            "1,    2,   3",
+            "49,  51, 100",
+            "1,  100, 101"
+    })
+    void severalSums(Long first, Long second, Long expectedResult) {
+        assertEquals(expectedResult, basicCalculator.sum(first, second),
+                     () -> first + " + " + second + " should equal " + expectedResult);
+    }
+    
+En este ejemplo, podemos ver dos anotaciones adicionales, @ParametizedTest y @CvsSource. 
+
+@CvsSource define multiples casos de entrada y sus respectivas salidas esperadas. Cada caso de prueba es una fila, donde la primera columna es el primer operando, la segunda es el segundo operando, y la tercera representa el resultado esperado. Los datos de cada fila son pasados al metodo severalSums como parametros.
+
+@ParameterizedTest describe el caso de prueba basado en los casos de entrada definidos en @CvsSource. Esto significa que por cada caso de prueba (fila) en @CvsSource, se va a mostrar una descripcion de la forma {0} + {1} = {2}, donde 0 representa la primera posicion de la fila, 1 la segunda y 2 la tercera.
+
 
 ## Creación de ejecutable
 
