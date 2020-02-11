@@ -1,80 +1,61 @@
 package org.medellin.app.soccercup.service;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 import org.medellin.app.soccercup.entity.Team;
 
 public class TeamService {
-	private  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "soccercupJPA" );
+	private final EntityManager entityManager;
 
+	public TeamService(final EntityManager entityManager){
+		this.entityManager = entityManager;
+	}
 
-	public Team persistTeam(Team team) {
-
-		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
+	public Team persistTeam(final Team team) {
+		final var transaction = entityManager.getTransaction();
+		transaction.begin();
 		entityManager.persist( team );
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		transaction.commit();
+
 		return team;
 
 	}
 
 	public List<Team> getAllTeams() {
-
-		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
-
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-//entityManager.getTransaction().begin();
-		Query query = entityManager.createQuery( "Select o from Team o" );
-		List<Team> teamList = query.getResultList();
-//entityManager.getTransaction().commit();
-		entityManager.close();
-
-		return teamList;
+		final var query = entityManager.createQuery( "Select o from Team o" );
+		return query.getResultList();
 	}
 
-	public Team getById(Long id) {
-
-		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
-
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-//entityManager.getTransaction().begin();
-		Team team = entityManager.find(Team.class, id);
-//entityManager.getTransaction().commit();
-		entityManager.close();
-
-		return team;
+	public Team getById(final Long idOfTeam) {
+		return entityManager.find(Team.class, idOfTeam);
 	}
 
-	public Team deleteTeam(Long id) {
+	public Team deleteTeam(final Long idOfTeam) {
 
-		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
+		final var transaction = entityManager.getTransaction();
+		transaction.begin();
 
-		Team team = entityManager.find(Team.class, id);
+		final var team = entityManager.find(Team.class, idOfTeam);
 		entityManager.remove(team);
 
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		transaction.commit();
+
 		return team;
 
 	}
 
-	public Team updateTeam(Team team) {
+	public Team updateTeam(final Team team) {
+		final var transaction = entityManager.getTransaction();
 
-		//entityManagerFactory = Persistence.createEntityManagerFactory( "worldcupJPA" );
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
+		transaction.begin();
 		entityManager.merge( team );
-		entityManager.getTransaction().commit();
-		entityManager.close();
-		return team;
+		transaction.commit();
 
+		return team;
+	}
+
+	public void close(){
+		entityManager.close();
 	}
 }

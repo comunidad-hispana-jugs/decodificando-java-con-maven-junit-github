@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CalculatorClient {
-	final static Logger logger = LoggerFactory.getLogger( CalculatorClient.class );
+	private static final  Logger logger = LoggerFactory.getLogger( CalculatorClient.class );
 
 	public static void main(String[] args) throws IOException {
 		logger.info( "Starting calculator console client" );
@@ -30,29 +30,29 @@ public class CalculatorClient {
 
 		BasicCalculator calculator = new BasicCalculator();
 
-		Long result = null;
+		Long result;
 		switch (operation){
-			case "+":{
+			case "+":
 				result = calculator.sum( number1, number2 );
 				break;
-			}
-			case "*":{
+
+			case "*":
 				result = calculator.mul( number1, number2 );
 				break;
-			}
-			case "-":{
+
+			case "-":
 				result = calculator.subs( number1, number2 );
 				break;
-			}
-			case "/3":{
+
+			case "/3":
+			case "/":
 				result = calculator.div( number1, number2 );
 				break;
-			}
+
 			default: throw new IllegalArgumentException("operation " + operation + " doesn't exist");
 		}
 
 		System.out.println( number1 + " " + operation + " " + number2 + " = " +  result);
-
 		logger.info( "Closing calculator console client" );
 
 	}
@@ -62,7 +62,7 @@ public class CalculatorClient {
 			Long.valueOf( textNumber );
 		}
 		catch (NumberFormatException e) {
-			System.err.println( textNumber + " is not a valid Number." );
+			logger.error( "{} is not a valid Number.", textNumber);
 			System.exit( 1 );
 		}
 	}
