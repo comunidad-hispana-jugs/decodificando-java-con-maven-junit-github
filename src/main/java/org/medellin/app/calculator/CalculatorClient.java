@@ -32,22 +32,22 @@ public class CalculatorClient {
 
 		Long result;
 		switch (operation){
-			case "+":
+			case "+": {
 				result = calculator.sum( number1, number2 );
 				break;
-
-			case "*":
+			}
+			case "*": {
 				result = calculator.mul( number1, number2 );
 				break;
-
-			case "-":
+			}
+			case "-": {
 				result = calculator.subs( number1, number2 );
 				break;
-
-			case "/3":
-			case "/":
+			}
+			case "/": {
 				result = calculator.div( number1, number2 );
 				break;
+			}
 
 			default: throw new IllegalArgumentException("operation " + operation + " doesn't exist");
 		}
@@ -60,9 +60,9 @@ public class CalculatorClient {
 	public static void validateNumber(String textNumber) {
 		try {
 			Long.valueOf( textNumber );
-		}
-		catch (NumberFormatException e) {
-			logger.error( "{} is not a valid Number.", textNumber);
+		}catch (NumberFormatException e) {
+			System.err.println( textNumber + " is not a valid Number.");
+			//logger.error( "{} is not a valid Number.", textNumber);
 			System.exit( 1 );
 		}
 	}

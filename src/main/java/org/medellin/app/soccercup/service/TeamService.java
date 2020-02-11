@@ -6,56 +6,55 @@ import javax.persistence.*;
 import org.medellin.app.soccercup.entity.Team;
 
 public class TeamService {
-	private final EntityManager entityManager;
+	private  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "soccercupJPA" );
 
-	public TeamService(final EntityManager entityManager){
-		this.entityManager = entityManager;
-	}
-
-	public Team persistTeam(final Team team) {
-		final var transaction = entityManager.getTransaction();
-		transaction.begin();
+	public Team persistTeam(Team team) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
 		entityManager.persist( team );
-		transaction.commit();
-
+		entityManager.getTransaction().commit();
+		entityManager.close();
 		return team;
 
 	}
 
 	public List<Team> getAllTeams() {
-		final var query = entityManager.createQuery( "Select o from Team o" );
-		return query.getResultList();
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		Query query = entityManager.createQuery( "Select o from Team o" );
+		List<Team> teamList = query.getResultList();
+		entityManager.close();
+		return teamList;
 	}
 
-	public Team getById(final Long idOfTeam) {
-		return entityManager.find(Team.class, idOfTeam);
+
+	public Team getById(Long id) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		Team team = entityManager.find(Team.class, id);
+		entityManager.close();
+		return team;
 	}
 
-	public Team deleteTeam(final Long idOfTeam) {
+	public Team deleteTeam(Long id) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
 
-		final var transaction = entityManager.getTransaction();
-		transaction.begin();
-
-		final var team = entityManager.find(Team.class, idOfTeam);
+		Team team = entityManager.find(Team.class, id);
 		entityManager.remove(team);
 
-		transaction.commit();
-
-		return team;
-
-	}
-
-	public Team updateTeam(final Team team) {
-		final var transaction = entityManager.getTransaction();
-
-		transaction.begin();
-		entityManager.merge( team );
-		transaction.commit();
-
-		return team;
-	}
-
-	public void close(){
+		entityManager.getTransaction().commit();
 		entityManager.close();
+		return team;
+
 	}
+
+	public Team updateTeam(Team team) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.merge( team );
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		return team;
+
+	}
+
 }

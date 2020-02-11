@@ -1,143 +1,51 @@
 package org.medellin.app.soccercup.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
 import org.medellin.app.soccercup.entity.Team;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class TeamServiceTest {
 
-    @InjectMocks
     private TeamService teamService;
-
-    @Mock
-    private EntityManager entityManager;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        teamService = new TeamService();
     }
 
     @Test
-    void toDoPersistOfATeam() {
-        Team aTeam = new Team("My Team");
-        EntityTransaction entityTransaction = mock(EntityTransaction.class);
+    @DisplayName("Adding a new Team")
+    void persistTeam() {
+        Team team = new Team();
+        team.setName( "My Team" );
+        team = this.teamService.persistTeam( team );
 
-        doNothing().when(entityTransaction).begin();
-        doNothing().when(entityTransaction).commit();
-        when(entityManager.getTransaction()).thenReturn(entityTransaction);
-        doNothing().when(entityManager).persist(aTeam);
-
-        InOrder order = inOrder(entityTransaction);
-
-        Team newTeam = teamService.persistTeam(aTeam);
-
-        assertEquals(aTeam, newTeam);
-
-        verify(entityManager).persist(aTeam);
-        verify(entityManager).getTransaction();
-        order.verify(entityTransaction).begin();
-        order.verify(entityTransaction).commit();
-
+        assertNotNull(this.teamService.getById( team.getId()));
     }
 
-    @Test
-    void toDoGetAllTeams() {
-        Query query = mock(Query.class);
-        List<Team> teams = Arrays.asList(new Team("My Team 1"), new Team("My Team 2"));
-        when(entityManager.createQuery( "Select o from Team o" )).thenReturn(query);
-        when(query.getResultList()).thenReturn(teams);
+    @ParameterizedTest
+    @DisplayName("Adding several Teams from a csv file")
+    @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
+    void persistTeams(String inputName, String expectedName) {
+        Team team = new Team();
+        team.setName( inputName );
+        team = this.teamService.persistTeam( team );
 
-        List<Team> teamResult = teamService.getAllTeams();
-        assertEquals(teams, teamResult);
-
-        verify(entityManager).createQuery("Select o from Team o");
-        verify(query).getResultList();
-
-
+        Team teamSaved = this.teamService.getById( team.getId());
+        assertEquals(expectedName, teamSaved.getName());
     }
 
-    @Test
-    void toDoGetATeamById() {
-        Long idOfTeam = 1L;
-        Team aTeam = new Team("My Team");
-        when(entityManager.find(Team.class, idOfTeam)).thenReturn(aTeam);
 
-        Team team = teamService.getById(idOfTeam);
-        assertEquals(aTeam, team);
 
-        verify(entityManager).find(Team.class, idOfTeam);
 
-    }
 
-    @Test
-    void toDoDeleteATeam() {
-        Long idOfTeam = 1L;
-        Team aTeam = new Team("My Team");
-        EntityTransaction entityTransaction = mock(EntityTransaction.class);
 
-        doNothing().when(entityTransaction).begin();
-        doNothing().when(entityTransaction).commit();
-        when(entityManager.getTransaction()).thenReturn(entityTransaction);
-        when(entityManager.find(Team.class, idOfTeam)).thenReturn(aTeam);
-        doNothing().when(entityManager).remove(aTeam);
-
-        InOrder order = inOrder(entityTransaction);
-
-        Team newTeam = teamService.deleteTeam(idOfTeam);
-
-        assertEquals(aTeam, newTeam);
-
-        verify(entityManager).remove(aTeam);
-        verify(entityManager).getTransaction();
-        verify(entityManager).find(Team.class, idOfTeam);
-        order.verify(entityTransaction).begin();
-        order.verify(entityTransaction).commit();
-
-    }
-
-    @Test
-    void toDoUpdateATeam() {
-        Team aTeam = new Team("My Team");
-        EntityTransaction entityTransaction = mock(EntityTransaction.class);
-
-        doNothing().when(entityTransaction).begin();
-        doNothing().when(entityTransaction).commit();
-        when(entityManager.getTransaction()).thenReturn(entityTransaction);
-        when(entityManager.merge(aTeam)).thenReturn(aTeam);
-
-        InOrder order = inOrder(entityTransaction);
-
-        Team newTeam = teamService.updateTeam(aTeam);
-
-        assertEquals(aTeam, newTeam);
-
-        verify(entityManager).merge(aTeam);
-        verify(entityManager).getTransaction();
-        order.verify(entityTransaction).begin();
-        order.verify(entityTransaction).commit();
-    }
-
-    @Test
-    void toCloseSession(){
-        doNothing().when(entityManager).close();
-
-        teamService.close();
-
-        verify(entityManager).close();
-
-    }
 }
