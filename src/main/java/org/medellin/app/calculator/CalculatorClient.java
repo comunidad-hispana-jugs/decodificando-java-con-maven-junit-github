@@ -30,7 +30,7 @@ public class CalculatorClient {
 
 		BasicCalculator calculator = new BasicCalculator();
 
-		Long result;
+		Long result=null;
 		switch (operation){
 			case "+": {
 				result = calculator.sum( number1, number2 );
@@ -49,7 +49,8 @@ public class CalculatorClient {
 				break;
 			}
 
-			default: throw new IllegalArgumentException("operation " + operation + " doesn't exist");
+			default:
+				System.err.println("operation " + operation + " doesn't exist");
 		}
 
 		System.out.println( number1 + " " + operation + " " + number2 + " = " +  result);
@@ -62,7 +63,6 @@ public class CalculatorClient {
 			Long.valueOf( textNumber );
 		}catch (NumberFormatException e) {
 			System.err.println( textNumber + " is not a valid Number.");
-			//logger.error( "{} is not a valid Number.", textNumber);
 			System.exit( 1 );
 		}
 	}

@@ -30,7 +30,7 @@ public class App
                 break;
             }
             default:
-                throw new IllegalArgumentException( "Demo " + demo + " doesn't exist" );
+                System.err.println("Demo " + demo + " doesn't exist");
         }
     }
 }
