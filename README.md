@@ -139,14 +139,16 @@ Crea los casos de pruebas en la clase BasicCalculator.java ubicada en  `src/main
 
 - Abre la clase BasicCalculator.java para crear los casos de pruebas. Cree auna clase CalculatorTest.java en `src/test/java/org/medellin/app/calculator`
 
-- Por cada operacion en BasicCalculator.java, se debe crear al menos un caso de prueba. Por ejemplo, el siguiente es un caso de prueba para la operacion sumar:
-
+- Por cada operacion en BasicCalculator.java, se debe crear al menos un caso de prueba. Por ejemplo, el siguiente es un caso de prueba para la operacion sumar: 
  
+    
     @Test
     @DisplayName("Testing sum: 1+1=2")
     void sum() {
         assertEquals(2, basicCalculator.sum(1L, 1L));
     }
+    
+    
     
 En este caso, @Test le dice a JUnit que este es un caso de prueba. @DisplayName define la descripcion del caso de prueba. En este caso solo estamos ejecutando la prueba con un unico caso de entrada, 1 + 1.
 
