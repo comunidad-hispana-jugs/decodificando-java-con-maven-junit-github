@@ -33,7 +33,7 @@ class TeamServiceTest {
 
     @ParameterizedTest
     @DisplayName("Adding several Teams from a csv file")
-    @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/data/data.csv", numLinesToSkip = 1)
     void persistTeams(String inputName, String expectedName) {
         Team team = new Team();
         team.setName( inputName );
