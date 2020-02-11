@@ -139,7 +139,36 @@ Crea los casos de pruebas en la clase BasicCalculator.java ubicada en  `src/main
 
 - Abre la clase BasicCalculator.java para crear los casos de pruebas. Cree una clase CalculatorTest.java en `src/test/java/org/medellin/app/calculator`
 
-- Por cada operacion en BasicCalculator.java, se debe crear al menos un caso de prueba. Por ejemplo, el siguiente es un caso de prueba para la operacion sumar: 
+- Instanciamos el sujeto de prueba en la clase CalculatorTest.java, en este caso el sujeto es BasicCalculator:
+
+    public class CalculatorTest {
+    
+        private final BasicCalculator basicCalculator = new BasicCalculator();
+        
+        ...
+
+- Empezamos con el primer caso de prueba, un caso de exito. Creamos un metodo sum. Este metodo va a usar el sujeto de prueba para sumar 1 con 1.
+
+        
+        void sum() {
+            basicCalculator.sum(1L, 1L);
+        }
+
+- Luego necesitamos validar si el resultado de la suma es correcto, asi que agregamos un assertEquals validando que el resultado debe ser 2
+
+        
+        void sum() {
+            assertEquals(2, basicCalculator.sum(1L, 1L));
+        }
+
+- Ahora, debemos decirle a JUnit que este metodo es un caso de prueba que puede ejecutarse, asi que le agregamos la anotation @Test
+
+        @Test
+        void sum() {
+            assertEquals(2, basicCalculator.sum(1L, 1L));
+        }
+
+- Para que el caso de prueba sea mas descriptivo, podemos agregar el @DisplayName diciendo de que trata el caso de prueba
 
         @Test
         @DisplayName("Testing sum: 1+1=2")
@@ -147,30 +176,54 @@ Crea los casos de pruebas en la clase BasicCalculator.java ubicada en  `src/main
             assertEquals(2, basicCalculator.sum(1L, 1L));
         }
 
-En este caso, @Test le dice a JUnit que este es un caso de prueba. @DisplayName define la descripcion del caso de prueba. En este caso solo estamos ejecutando la prueba con un unico caso de entrada, 1 + 1.
+- Ahora se puede ejecutar este caso de prueba con el comando `mvn clean test`
 
-JUnit 5 permite crear casos de prueba parametrizados, en los cuales se puede asociar multiples entradas al caso de prueba, por ejemplo:
+- En el caso anterior, solo usamos un caso de entrada (1 y 1). Que pasa si quiero probar la misma logica de negocio (sumar) pero con muchos mas casos de prueba? Empezamos definiendo el metodo:
 
- 
-    @DisplayName("Testing several sums")
-    @ParameterizedTest(name = "{0} + {1} = {2}")
-    @CsvSource({
-            "0,    1,   1",
-            "1,    2,   3",
-            "49,  51, 100",
-            "1,  100, 101"
-    })
-    void severalSums(Long first, Long second, Long expectedResult) {
-        assertEquals(expectedResult, basicCalculator.sum(first, second),
-                     () -> first + " + " + second + " should equal " + expectedResult);
-    }
+        @Test
+        @DisplayName("Testing several sums")
+        void severalSums(Long first, Long second, Long expectedResult) {
+            assertEquals(expectedResult, basicCalculator.sum(first, second),
+                         () -> first + " + " + second + " should equal " + expectedResult);
+        }
+
+- Luego definimos los multiples casos de entrada usando la anotacion @CsvSource:
+
+        @Test
+        @DisplayName("Testing several sums")
+        @CsvSource({
+                    "0,    1,   1",
+                    "1,    2,   3",
+                    "49,  51, 100",
+                    "1,  100, 101"
+            })
+        void severalSums(Long first, Long second, Long expectedResult) {
+            assertEquals(expectedResult, basicCalculator.sum(first, second),
+                         () -> first + " + " + second + " should equal " + expectedResult);
+        }
+
+    @CvsSource define multiples casos de entrada y sus respectivas salidas esperadas. Cada caso de prueba es una fila, donde la primera columna es el primer operando, la segunda es el segundo operando, y la tercera representa el resultado esperado. Los datos de cada fila son pasados al metodo severalSums como parametros.
+    JUnit va a ir fila por fila, ejecutando el metodo severalSums con los datos de esa fila.
     
-En este ejemplo, podemos ver dos anotaciones adicionales, @ParametizedTest y @CvsSource. 
+- Tambien podemos agregar una descripcion dinamica a la prueba, para hacerle seguimiendo. Para esto usamos la anotacion @ParameterizedTest.
 
-@CvsSource define multiples casos de entrada y sus respectivas salidas esperadas. Cada caso de prueba es una fila, donde la primera columna es el primer operando, la segunda es el segundo operando, y la tercera representa el resultado esperado. Los datos de cada fila son pasados al metodo severalSums como parametros.
+        @Test
+        @DisplayName("Testing several sums")
+        @CsvSource({
+                    "0,    1,   1",
+                    "1,    2,   3",
+                    "49,  51, 100",
+                    "1,  100, 101"
+            })
+        @ParameterizedTest(name = "{0} + {1} = {2}")
+        void severalSums(Long first, Long second, Long expectedResult) {
+            assertEquals(expectedResult, basicCalculator.sum(first, second),
+                         () -> first + " + " + second + " should equal " + expectedResult);
+        }
 
-@ParameterizedTest describe el caso de prueba basado en los casos de entrada definidos en @CvsSource. Esto significa que por cada caso de prueba (fila) en @CvsSource, se va a mostrar una descripcion de la forma {0} + {1} = {2}, donde 0 representa la primera posicion de la fila, 1 la segunda y 2 la tercera.
+    @ParameterizedTest describe el caso de prueba basado en los casos de entrada definidos en @CvsSource. Esto significa que por cada caso de prueba (fila) en @CvsSource, se va a mostrar una descripcion de la forma {0} + {1} = {2}, donde 0 representa la primera posicion de la fila, 1 la segunda y 2 la tercera.
 
+- Luego se puede ejecutar este caso de prueba con el comando `mvn clean test`
 
 ## Creación de ejecutable
 
