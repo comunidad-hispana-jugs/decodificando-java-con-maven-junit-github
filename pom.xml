@@ -11,10 +11,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>12</maven.compiler.source>
-        <maven.compiler.target>12</maven.compiler.target>
+        <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <!--Database client -->
         <hibernate.version>5.4.10.Final</hibernate.version>
         <hsqldb.version>2.5.0</hsqldb.version>
+        <!--<postgresql.version>42.2.8</postgresql.version>-->
 
         <!--Testing-->
         <!--<version.junit>4.12</version.junit>-->
@@ -40,6 +41,13 @@
             <version>${hsqldb.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <!--<dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+      </dependency>-->
+
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -54,6 +62,14 @@
             <version>${slf4j.version}</version>
 
         </dependency>
+
+        <!-- From Junit 5 the dependency is junit-jupiter
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>${version.junit}</version>
+</dependency>
+-->
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
