@@ -16,15 +16,32 @@ public class CalculatorTest {
 
 	@Test
 	@DisplayName("Testing sum: 1+1=2")
-	void sum() {
-		assertEquals(2, basicCalculator.sum(1L, 1L));
-	}
+	public void sum() {
+		// Arrange
+		Long number1 = 1L;
+		Long number2 = 1L;
+		Long expectedValue = 2L;
 
+		// Act
+		Long result = basicCalculator.sum(number1, number2);
+
+		// Assert
+		assertEquals(expectedValue, result);
+	}
 
 	@Test
 	@DisplayName("Testing wrong sum: 1+1<>0")
-	void wrongSum() {
-		assertNotEquals( 0, basicCalculator.sum(1L, 1L));
+	public void wrongSum() {
+		// Arrange
+		Long number1 = 1L;
+		Long number2 = 1L;
+		Long unexpectedValue = 0L;
+
+		// Act
+		Long result = basicCalculator.sum(number1, number2);
+
+		// Assert
+		assertNotEquals( unexpectedValue, result);
 	}
 
 	@DisplayName("Testing several sums")
@@ -35,11 +52,10 @@ public class CalculatorTest {
 			"49,  51, 100",
 			"1,  100, 101"
 	})
-	void severalSums(Long first, Long second, Long expectedResult) {
+	public void severalSums(Long first, Long second, Long expectedResult) {
 		assertEquals(expectedResult, basicCalculator.sum(first, second),
 					 () -> first + " + " + second + " should equal " + expectedResult);
 	}
-
 
 	@DisplayName("Testing several mul")
 	@ParameterizedTest(name = "{0} * {1} = {2}")
@@ -49,7 +65,7 @@ public class CalculatorTest {
 			"49,  51, 2499",
 			"1,  100, 100"
 	})
-	void severalMul(Long first, Long second, Long expectedResult) {
+	public void severalMul(Long first, Long second, Long expectedResult) {
 		assertEquals(expectedResult, basicCalculator.mul(first, second),
 				() -> first + " + " + second + " should equal " + expectedResult);
 	}
@@ -62,7 +78,7 @@ public class CalculatorTest {
 			"49,  51, -2",
 			"0,  0, 0"
 	})
-	void severalSubs(Long first, Long second, Long expectedResult) {
+	public void severalSubs(Long first, Long second, Long expectedResult) {
 		assertEquals(expectedResult, basicCalculator.subs(first, second),
 				() -> first + " + " + second + " should equal " + expectedResult);
 	}
@@ -77,7 +93,7 @@ public class CalculatorTest {
 			"9,  3, 3"
 
 	})
-	void severalDiv(Long first, Long second, Long expectedResult) {
+	public void severalDiv(Long first, Long second, Long expectedResult) {
 		assertEquals(expectedResult, basicCalculator.div(first, second),
 				() -> first + " + " + second + " should equal " + expectedResult);
 	}
@@ -85,12 +101,10 @@ public class CalculatorTest {
 	@DisplayName("Testing for exception zero division")
 	@ParameterizedTest(name = "{0} / {1}")
 	@CsvSource({"1,0", "0,0"})
-	void zeroDivision(Long first, Long second) {
+	public void zeroDivision(Long first, Long second) {
 		assertThrows(IllegalArgumentException.class, () -> {
 			basicCalculator.div(first, second);
 		});
 	}
 
 }
-
-
