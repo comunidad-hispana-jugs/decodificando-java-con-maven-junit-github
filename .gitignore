@@ -1,0 +1,60 @@
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### Binaries ###
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
+*.class
+
+### Maven ### 
+target/
+
+### STS / Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+nbactions.xml
+nb-configuration.xml
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+
+### Misc ###
+*.swp
+release.properties
+pom.xml.releaseBackup
+pom.xml.tag
+
+### Selenium ###
+test-output/
